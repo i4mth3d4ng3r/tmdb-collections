@@ -1,0 +1,36 @@
+{
+  "name": "tmdbcollections",
+  "version": "1.0.0",
+  "description": "Catalog of TMDB Collections a.k.a movie parts grouped as series.",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JMskch/TMDB-Collections.git"
+  },
+  "keywords": [
+    "stremio",
+    "tmdb",
+    "collections",
+    "movies",
+    "addon"
+  ],
+  "author": "Youchi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JMskch/TMDB-Collections/issues"
+  },
+  "homepage": "https://github.com/JMskch/TMDB-Collections#readme",
+  "dependencies": {
+    "cache-manager": "^6.3.2",
+    "cacheable": "^1.8.8",
+    "express": "^4.21.2",
+    "freekeys": "^0.0.4",
+    "keyv": "^5.2.3",
+    "moviedb-promise": "^4.0.7",
+    "transliteration": "^2.3.5"
+  }
+}
