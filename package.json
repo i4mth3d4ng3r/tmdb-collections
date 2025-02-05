@@ -33,6 +33,7 @@
     "freekeys": "^0.0.4",
     "keyv": "^5.2.3",
     "moviedb-promise": "^4.0.7",
+    "node-cron": "^3.0.3",
     "transliteration": "^2.3.5"
   }
 }
