@@ -37,7 +37,7 @@ async function getManifest() {
     name: "TMDB Collections",
     description:
       "Addon allows you to explore TMDB Collections, which are basically grouped movie parts. Discover collection catalogs by genres or search by collection/movie name or person.",
-    types: ["movie"],
+    types: ["movie", "collections"],
     resources: ["catalog", "meta"],
     idPrefixes: ["tmdbc."],
     // favicon: "https://github.com/JMskch/TMDB-Collections/raw/main/Images/TMDBCollections_logo.png",
@@ -45,9 +45,9 @@ async function getManifest() {
     background: "https://github.com/JMskch/TMDB-Collections/raw/main/Images/TMDBCollections_logo.png",
     catalogs: [
       {
-        type: "movie",
+        type: "collections",
         id: "tmdbc.popular",
-        name: "TMDB Collections - Popular",
+        name: "Popular",
         extra: [
           {
             name: "search",
@@ -61,9 +61,9 @@ async function getManifest() {
         ],
       },
       {
-        type: "movie",
+        type: "collections",
         id: "tmdbc.topRated",
-        name: "TMDB Collections - Top Rated",
+        name: "Top Rated",
         extra: [
           {
             name: "genre",
@@ -73,9 +73,9 @@ async function getManifest() {
         ],
       },
       {
-        type: "movie",
+        type: "collections",
         id: "tmdbc.newReleases",
-        name: "TMDB Collections - New Releases",
+        name: "New Releases",
         extra: [
           {
             name: "genre",

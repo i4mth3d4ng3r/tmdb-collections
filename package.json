@@ -27,7 +27,9 @@
   "dependencies": {
     "cache-manager": "^6.3.2",
     "cacheable": "^1.8.8",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "fanart.tv": "^3.0.1",
     "freekeys": "^0.0.4",
     "keyv": "^5.2.3",
     "moviedb-promise": "^4.0.7",

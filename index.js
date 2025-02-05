@@ -4,6 +4,7 @@ const addon = express();
 const getManifest = require("./manifest");
 const qs = require("querystring");
 
+const { getFanart } = require("./lib/getFanart");
 const { getGenres } = require("./lib/getTmdb");
 const { getSearch } = require("./lib/searchTMDB");
 const { discoverXCollections } = require("./lib/discoverTmdb");
@@ -90,8 +91,8 @@ addon.get("/catalog/:type/:id/:extra?.json", async function (req, res) {
         const oneYearAgo = new Date();
         oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
         discoverParams["primary_release_date.gte"] = oneYearAgo.toISOString().split("T")[0];
-        discoverParams["vote_count.gte"] = 10;
-        discoverParams["vote_average.gte"] = 2;
+        discoverParams["vote_count.gte"] = 5; //bare minimum
+        discoverParams["vote_average.gte"] = 5; //bare minimum
         sortCollectionsBy = "latestReleaseDate";
         break;
 
@@ -140,6 +141,17 @@ addon.get("/meta/:type/:id.json", async function (req, res) {
   console.log("requested metadata for", req.params.type, "and id", req.params.id);
   const collectionId = req.params.id.split(".")[1];
   const collection = await processCollectionDetails(collectionId);
+
+  await Promise.all(
+    collection.videos.map(async (video) => {
+      if (video.id) {
+        const fanartUrl = await getFanart(video.id);
+        if (fanartUrl) {
+          video.thumbnail = fanartUrl;
+        }
+      }
+    })
+  );
 
   respond(res, { meta: collection });
 });
