@@ -1,42 +1,17 @@
-// const { getGenres } = require("./lib/getTmdb"); //since manifest is loaded first and it is importing getTmdb where moviedb is initialized, other initialization is node needed anymore
+const genres = require("./Static/genres");
+
+// Extract only the names from the genres array
+const genreNames = genres.map((genre) => genre.name);
 
 console.log("[manifest.js] Module being loaded");
 
 async function getManifest() {
-  // console.log("[manifest.js] getManifest called");
-  // try { //not need to call genres dynamicly, list is static
-  //   genre = await getGenres().then((genres) => genres.map((genre) => genre.name));
-  // } catch (err) {
-  // console.error("Error getting genres:", err);
-  genre = [
-    "Action",
-    "Adventure",
-    "Animation",
-    "Comedy",
-    "Crime",
-    "Documentary",
-    "Drama",
-    "Family",
-    "Fantasy",
-    "History",
-    "Horror",
-    "Music",
-    "Mystery",
-    "Romance",
-    "Science Fiction",
-    "TV Movie",
-    "Thriller",
-    "War",
-    "Western",
-  ]; // Fallback genres
-  // }
-
   return {
     id: "org.stremio.tmdbcollections",
-    version: "1.0.0",
+    version: "1.0.1",
     name: "TMDB Collections",
     description:
-      "Addon allows you to explore TMDB Collections, which are basically grouped movie parts. Discover collection catalogs by genres or search by collection/movie name or person.",
+      "Addon allows you to explore TMDB Collections, which are basically grouped movie parts. Discover collections with newly released movies or catalogs with popular, top rated collections with possible filtering by genre...or search some collections by collection/movie/actor/director name in any language.",
     types: ["movie", "collections"],
     resources: ["catalog", "meta"],
     idPrefixes: ["tmdbc."],
@@ -56,7 +31,7 @@ async function getManifest() {
           {
             name: "genre",
             isRequired: false,
-            options: genre,
+            options: genreNames,
           },
         ],
       },
@@ -68,7 +43,7 @@ async function getManifest() {
           {
             name: "genre",
             isRequired: false,
-            options: genre,
+            options: genreNames,
           },
         ],
       },
@@ -80,7 +55,7 @@ async function getManifest() {
           {
             name: "genre",
             isRequired: false,
-            options: genre,
+            options: genreNames,
           },
         ],
       },
