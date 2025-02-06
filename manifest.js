@@ -11,7 +11,7 @@ async function getManifest() {
     version: "1.0.1",
     name: "TMDB Collections",
     description:
-      "Addon allows you to explore TMDB Collections, which are basically grouped movie parts. Discover collections with newly released movies or catalogs with popular, top rated collections with possible filtering by genre...or search some collections by collection/movie/actor/director name in any language.",
+      "Addon lets you explore TMDB Collections, which are essentially grouped movie series. Discover collections featuring newly released films or browse catalogs of popular and top-rated collections. You can filter by genre or search collections by movie, actor, director, or collection name in any language.",
     types: ["movie", "collections"],
     resources: ["catalog", "meta"],
     idPrefixes: ["tmdbc."],
