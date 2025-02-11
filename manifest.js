@@ -1,4 +1,5 @@
 const genres = require("./Static/genres");
+const dev = process.argv.includes("--dev") == 1 ? ".dev" : "";
 
 // Extract only the names from the genres array
 const genreNames = genres.map((genre) => genre.name);
@@ -7,8 +8,8 @@ console.log("[manifest.js] Module being loaded");
 
 async function getManifest() {
   return {
-    id: "org.stremio.tmdbcollections" + (process.argv.includes("--dev") == 1 ? ".dev" : ""),
-    version: "1.0.4",
+    id: "org.stremio.tmdbcollections" + dev,
+    version: "1.0.5",
     name: "TMDB Collections",
     description:
       "Addon lets you explore TMDB Collections, which are essentially grouped movie series. Discover collections featuring newly released films or browse catalogs of popular and top-rated collections. You can filter by genre or search collections by movie, actor, director, or collection name in any language.",
@@ -21,8 +22,8 @@ async function getManifest() {
     catalogs: [
       {
         type: "collections",
-        id: "tmdbc.popular",
-        name: "Popular",
+        id: "tmdbc.popular" + dev,
+        name: "Popular" + dev,
         extra: [
           {
             name: "search",
@@ -37,8 +38,8 @@ async function getManifest() {
       },
       {
         type: "collections",
-        id: "tmdbc.topRated",
-        name: "Top Rated",
+        id: "tmdbc.topRated" + dev,
+        name: "Top Rated" + dev,
         extra: [
           {
             name: "genre",
@@ -49,8 +50,8 @@ async function getManifest() {
       },
       {
         type: "collections",
-        id: "tmdbc.newReleases",
-        name: "New Releases",
+        id: "tmdbc.newReleases" + dev,
+        name: "New Releases" + dev,
         extra: [
           {
             name: "genre",
