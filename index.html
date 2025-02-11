@@ -13,7 +13,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
         background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
         color: #ffffff;
@@ -22,6 +21,13 @@
       .container {
         text-align: center;
         padding: 2rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 800px;
       }
 
       h1 {
@@ -33,7 +39,8 @@
       .author {
         font-size: 0.9rem;
         color: #ccc;
-        margin-top: 0.5rem;
+        margin: 0;
+        text-align: center;
       }
 
       .author a {
@@ -72,6 +79,10 @@
       .install-button:active {
         transform: translateY(0);
       }
+
+      footer {
+        padding: 1rem;
+      }
     </style>
   </head>
   <body>
@@ -81,13 +92,7 @@
         Addon lets you explore TMDB Collections, which are essentially grouped movie series. Discover collections featuring newly released films or browse catalogs of popular and top-rated collections. You can filter by genre or search collections by movie, actor, director, or collection name in any language.
       </p>
       <a href="#" id="installButton" class="install-button">Install Addon</a>
-      <p class="author">
-        To report issues or suggest improvements, please visit 
-        <a href="https://github.com/youchi1/tmdb-collections" target="_blank" rel="noopener">TMDB Collections</a>.
-      </p>
-      <p class="author">created by <a href="https://github.com/youchi1" target="_blank" rel="noopener">youchi</a></p>
     </div>
-
     <script>
       document.getElementById("installButton").addEventListener("click", function (e) {
         e.preventDefault();
@@ -96,4 +101,11 @@
       });
     </script>
   </body>
+  <footer>
+    <p class="author">
+      To report issues or suggest improvements, please visit 
+      <a href="https://github.com/youchi1/tmdb-collections" target="_blank" rel="noopener">TMDB Collections</a>.<br>
+      Created by <a href="https://github.com/youchi1" target="_blank" rel="noopener">youchi</a>
+    </p>
+  </footer>
 </html>
