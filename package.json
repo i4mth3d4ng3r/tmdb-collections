@@ -1,6 +1,6 @@
 {
   "name": "tmdb-collections",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Catalog of TMDB Collections a.k.a movie parts grouped as series.",
   "main": "server.js",
   "scripts": {
