@@ -7,7 +7,7 @@ console.log("[manifest.js] Module being loaded");
 
 async function getManifest() {
   return {
-    id: "org.stremio.tmdbcollections",
+    id: "org.stremio.tmdbcollections" + (process.argv.includes("--dev") == 1 ? ".dev" : ""),
     version: "1.0.3",
     name: "TMDB Collections",
     description:
