@@ -21,6 +21,29 @@ Addon lets you explore TMDB Collections, which are essentially grouped movie ser
 
 1. Go to the addon webpage and click on the "Install addon" button
 
+## Development
+
+### Environment Variables
+
+1. Copy `.env.example` to `.env`
+2. Get your Fanart.tv API key from https://fanart.tv/get-an-api-key/
+3. Add your Fanart.tv API key to `.env`
+
+Note: TMDB API key is automatically handled by the freekeys package.
+
+### Running Locally
+
+```bash
+# Install dependencies
+npm install
+
+# Run in development mode
+npm run dev
+
+# Run in production mode
+npm start
+```
+
 ## API Integration
 
 This addon uses:
