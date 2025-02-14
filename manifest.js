@@ -9,10 +9,10 @@ console.log("[manifest.js] Module being loaded");
 async function getManifest() {
   return {
     id: "org.stremio.tmdbcollections" + dev,
-    version: "1.0.6",
+    version: "1.0.7",
     name: "TMDB Collections",
     description:
-      "Addon lets you explore TMDB Collections, which are essentially grouped movie series. Discover collections featuring newly released films or browse catalogs of popular and top-rated collections. You can filter by genre or search collections by movie, actor, director, or collection name in any language.",
+      "Addon lets you explore TMDB Collections, which are essentially grouped movie series. Discover collections featuring newly released movies or browse catalogs of popular and top-rated collections. You can filter by genre or search collections by actor, director, writer, movie or collection name in any language.",
     types: ["movie", "collections"],
     resources: ["catalog", "meta"],
     idPrefixes: ["tmdbc."],

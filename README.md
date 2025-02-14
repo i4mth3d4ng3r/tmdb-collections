@@ -1,6 +1,6 @@
 # TMDB Collections - Stremio Addon
 
-Addon lets you explore TMDB Collections, which are essentially grouped movie series. Discover collections featuring newly released films or browse catalogs of popular and top-rated collections. You can filter by genre or search collections by movie, actor, director, or collection name in any language.
+Addon lets you explore TMDB Collections, which are essentially grouped movie series. Discover collections featuring newly released movies or browse catalogs of popular and top-rated collections. You can filter by genre or search collections by actor, director, writer, movie or collection name in any language.
 
 ## Features
 
@@ -15,7 +15,7 @@ Addon lets you explore TMDB Collections, which are essentially grouped movie ser
   - Browse by genres
   - Search by collection name
   - Search by movie name
-  - Search by person (actor/director)
+  - Search by person (actor/director/writer)
 
 ## Installation
 
