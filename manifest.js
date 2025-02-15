@@ -26,10 +26,6 @@ async function getManifest() {
         name: "Popular" + dev,
         extra: [
           {
-            name: "search",
-            isRequired: false,
-          },
-          {
             name: "genre",
             isRequired: false,
             options: genreNames,
@@ -41,6 +37,10 @@ async function getManifest() {
         id: `tmdbc${dev}.topRated`,
         name: "Top Rated" + dev,
         extra: [
+          {
+            name: "search",
+            isRequired: false,
+          },
           {
             name: "genre",
             isRequired: false,
