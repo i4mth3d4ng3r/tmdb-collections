@@ -15,14 +15,14 @@ async function getManifest() {
       "Addon lets you explore TMDB Collections, which are essentially grouped movie series. Discover collections featuring newly released movies or browse catalogs of popular and top-rated collections. You can filter by genre or search collections by actor, director, writer, movie or collection name in any language.",
     types: ["movie", "collections"],
     resources: ["catalog", "meta"],
-    idPrefixes: ["tmdbc."],
+    idPrefixes: [`tmdbc${dev}.`],
     favicon: "https://github.com/youchi1/tmdb-collections/raw/main/Images/favicon.png",
     logo: "https://github.com/youchi1/tmdb-collections/raw/main/Images/logo.png",
     background: "https://github.com/youchi1/tmdb-collections/raw/main/Images/bg.png",
     catalogs: [
       {
         type: "collections",
-        id: "tmdbc.popular" + dev,
+        id: `tmdbc${dev}.popular`,
         name: "Popular" + dev,
         extra: [
           {
@@ -38,7 +38,7 @@ async function getManifest() {
       },
       {
         type: "collections",
-        id: "tmdbc.topRated" + dev,
+        id: `tmdbc${dev}.topRated`,
         name: "Top Rated" + dev,
         extra: [
           {
@@ -50,7 +50,7 @@ async function getManifest() {
       },
       {
         type: "collections",
-        id: "tmdbc.newReleases" + dev,
+        id: `tmdbc${dev}.newReleases`,
         name: "New Releases" + dev,
         extra: [
           {

@@ -34,6 +34,7 @@
     "keyv": "^5.2.3",
     "moviedb-promise": "^4.0.7",
     "node-cron": "^3.0.3",
+    "node-fetch-retry": "^2.0.1",
     "transliteration": "^2.3.5"
   }
 }
