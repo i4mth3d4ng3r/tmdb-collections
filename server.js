@@ -1,3 +1,4 @@
+require("./lib/logger"); // Initialize New Relic logging
 const { addon } = require("./index.js");
 const { initializeBuffering } = require("./lib/bufferCatalogs");
 const PORT = process.env.PORT || 7000;
