@@ -11,7 +11,7 @@ addon.listen(PORT, () => {
   if (isDevelopment) {
     console.log("Buffering disabled in development mode");
   } else {
-    console.log("Will start catalog buffering system in 2 minutes...");
+    console.log("Will start catalog buffering system in 5 minutes...");
     setTimeout(() => {
       console.log("Starting catalog buffering system...");
       initializeBuffering()
@@ -21,6 +21,6 @@ addon.listen(PORT, () => {
         .catch((error) => {
           console.error("Failed to initialize catalog buffering:", error);
         });
-    }, 2 * 60 * 1000); // 2 minutes in milliseconds
+    }, 5 * 60 * 1000); // 2 minutes in milliseconds
   }
 });
