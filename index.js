@@ -21,7 +21,7 @@ addon.get("/", async function (_, res) {
 
 // Manifest endpoint
 addon.get("/manifest.json", async function (req, res) {
-  console.log("manifest requested");
+  // console.log("manifest requested");
   const manifest = await getManifest();
   respond(res, manifest);
 });
