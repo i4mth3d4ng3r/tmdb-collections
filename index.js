@@ -30,9 +30,10 @@ addon.get("/manifest.json", async function (req, res) {
 addon.param("type", async function (req, res, next, val) {
   const manifest = await getManifest();
   if (manifest.types.includes(val)) {
+    //somehow 'series', which is not in the manifest as supported type, is being passed here from time to time
     next();
   } else {
-    next("Unsupported type " + val);
+    res.end();
   }
 });
 
