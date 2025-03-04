@@ -1,6 +1,6 @@
 const genres = require("./Static/genres");
 const dev = process.argv.includes("--dev") == 1 ? "Dev" : "";
-const version = "1.1.4";
+const version = "1.2.1";
 
 // Extract only the names from the genres array
 const genreNames = genres.map((genre) => genre.name);
