@@ -58,7 +58,7 @@
 
       .install-button {
         display: inline-block;
-        padding: 1rem 2rem;
+        padding: 1rem 2rem 1rem 2rem;
         font-size: 1.2rem;
         font-weight: 600;
         color: #ffffff;
@@ -67,38 +67,684 @@
         border-radius: 50px;
         cursor: pointer;
         text-decoration: none;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
         box-shadow: 0 4px 15px rgba(0, 180, 216, 0.3);
+        position: relative;
+        padding-right: 3rem;
       }
-
-      .install-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 180, 216, 0.4);
+      
+      .install-button-container {
+        position: relative;
+        display: inline-block;
+        transition: transform 0.2s ease;
       }
-
-      .install-button:active {
-        transform: translateY(0);
+      
+      .install-dropdown-toggle {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+      }
+      
+      .install-dropdown-toggle::after {
+        content: "▼";
+        font-size: 10px;
+        color: white;
+      }
+      
+      .install-dropdown {
+        position: absolute;
+        top: calc(100% + 5px);
+        right: 0;
+        background-color: #333;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        z-index: 10;
+        display: none;
+        overflow: hidden;
+      }
+      
+      .install-dropdown.show {
+        display: block;
+      }
+      
+      .install-dropdown-item {
+        padding: 10px 15px;
+        color: white;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background-color 0.2s ease;
+      }
+      
+      .install-dropdown-item:hover {
+        background-color: #444;
+      }
+      
+      .copy-success {
+        position: absolute;
+        bottom: calc(100% + 10px);
+        right: 0;
+        background-color: #333;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+      
+      .copy-success.show {
+        opacity: 1;
       }
 
       footer {
         padding: 1rem;
       }
+      
+      .config-section {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        width: 100%;
+        max-width: 600px;
+      }
+      
+      .config-title {
+        font-size: 1.5rem;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        color: #00b4d8;
+      }
+      
+      .config-option {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        justify-content: space-between;
+      }
+      
+      .config-option label {
+        font-size: 1.1rem;
+        margin-right: 1rem;
+      }
+      
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      }
+      
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #333;
+        transition: .4s;
+        border-radius: 34px;
+      }
+      
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+      }
+      
+      input:checked + .slider {
+        background-color: #00b4d8;
+      }
+      
+      input:focus + .slider {
+        box-shadow: 0 0 1px #00b4d8;
+      }
+      
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
+      
+      .catalog-list {
+        width: 100%;
+        margin-top: 1rem;
+        border: 1px solid #333;
+        border-radius: 5px;
+        background-color: #222;
+        position: relative;
+      }
+      
+      .catalog-item {
+        display: flex;
+        align-items: center;
+        padding: 0.8rem;
+        border-bottom: 1px solid #333;
+        cursor: move;
+        transition: background-color 0.2s ease;
+        background-color: #222;
+      }
+      
+      .catalog-item:last-child {
+        border-bottom: none;
+      }
+      
+      .catalog-item-handle {
+        margin-right: 10px;
+        color: #666;
+        cursor: grab;
+      }
+      
+      .catalog-item-name {
+        flex-grow: 1;
+        text-align: left;
+      }
+      
+      .catalog-item.dragging {
+        opacity: 0.7;
+        background-color: #2a2a2a;
+      }
+      
+      .catalog-item.drop-target {
+        border-top: 2px solid #00b4d8;
+        padding-top: calc(0.8rem - 2px);
+      }
+      
+      .catalog-item.drop-target-bottom {
+        border-bottom: 2px solid #00b4d8;
+        padding-bottom: calc(0.8rem - 2px);
+      }
+      
+      .catalog-item.disabled {
+        opacity: 0.5;
+        background-color: #1a1a1a;
+        cursor: not-allowed;
+      }
+      
+      .catalog-toggle {
+        margin-left: 10px;
+      }
+      
+      .catalog-toggle .toggle-switch {
+        width: 40px;
+        height: 24px;
+      }
+      
+      .catalog-toggle .slider:before {
+        height: 16px;
+        width: 16px;
+      }
+      
+      .catalog-toggle input:checked + .slider:before {
+        transform: translateX(16px);
+      }
+      
+      .info-icon {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background-color: #00b4d8;
+        color: white;
+        text-align: center;
+        line-height: 18px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-left: 8px;
+        cursor: help;
+        position: relative;
+      }
+      
+      .info-tooltip {
+        visibility: hidden;
+        width: 250px;
+        background-color: #333;
+        color: #fff;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -125px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-weight: normal;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      
+      .info-tooltip::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #333 transparent transparent transparent;
+      }
+      
+      .info-icon:hover .info-tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
+      
+      .info-tooltip ul {
+        margin: 5px 0;
+        padding-left: 20px;
+      }
+      
+      .info-tooltip li {
+        margin-bottom: 5px;
+      }
     </style>
   </head>
   <body>
     <div class="container">
-        <h1>TMDB Collections</h1>
+      <h1>TMDB Collections</h1>
       <p>
         Addon lets you explore TMDB Collections, which are essentially grouped movie series. Discover collections featuring newly released movies or browse catalogs of popular and top-rated collections. You can filter by genre or search collections by actor, director, writer, movie or collection name in any language.
       </p>
-      <a href="#" id="installButton" class="install-button">Install Addon</a>
+      
+      <div class="config-section">
+        
+        <div class="config-option">
+          <label for="enableAdultContent">Enable adult content</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="enableAdultContent">
+            <span class="slider"></span>
+          </label>
+        </div>
+        
+        <div class="config-option">
+          <label for="enableSearch">Enable search</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="enableSearch" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        
+        <div class="config-option">
+          <label>Catalogs
+            <span class="info-icon">i
+              <span class="info-tooltip">
+                <strong>Catalog Options:</strong>
+                <ul>
+                  <li>Toggle catalogs on/off using the switches</li>
+                  <li>Drag and drop to reorder catalogs</li>
+                </ul>
+              </span>
+            </span>
+          </label>
+        </div>
+        
+        <div class="catalog-list" id="catalogList">
+          <div class="catalog-item" data-id="popular">
+            <div class="catalog-item-handle">☰</div>
+            <div class="catalog-item-name">Popular</div>
+            <div class="catalog-toggle">
+              <label class="toggle-switch">
+                <input type="checkbox" checked class="catalog-checkbox" id="catalog-popular" title="Enable Popular catalog">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+          <div class="catalog-item" data-id="topRated">
+            <div class="catalog-item-handle">☰</div>
+            <div class="catalog-item-name">Top Rated</div>
+            <div class="catalog-toggle">
+              <label class="toggle-switch">
+                <input type="checkbox" checked class="catalog-checkbox" id="catalog-topRated" title="Enable Top Rated catalog">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+          <div class="catalog-item" data-id="newReleases">
+            <div class="catalog-item-handle">☰</div>
+            <div class="catalog-item-name">New Releases</div>
+            <div class="catalog-toggle">
+              <label class="toggle-switch">
+                <input type="checkbox" checked class="catalog-checkbox" id="catalog-newReleases" title="Enable New Releases catalog">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="install-button-container">
+        <a href="#" id="installButton" class="install-button">Install</a>
+        <div class="install-dropdown-toggle" id="dropdownToggle"></div>
+        <div class="install-dropdown" id="installDropdown">
+          <div class="install-dropdown-item" id="copyUrlButton">Copy URL</div>
+        </div>
+        <div class="copy-success" id="copySuccess">URL copied!</div>
+      </div>
     </div>
     <script>
-      document.getElementById("installButton").addEventListener("click", function (e) {
-        e.preventDefault();
-        const installLink = "stremio://" + window.location.host + "/manifest.json";
-        window.location.href = installLink;
+      // Drag and drop functionality for catalog list
+      let draggedItem = null;
+      
+      // Handle install button hover behavior
+      const installButtonContainer = document.querySelector('.install-button-container');
+      const installButton = document.querySelector('.install-button');
+      const dropdownToggle = document.querySelector('.install-dropdown-toggle');
+      
+      // Function to update URL with current configuration
+      function updateUrlWithConfig() {
+        const config = getConfiguration();
+        const configParam = encodeURIComponent(JSON.stringify(config));
+        const newUrl = window.location.pathname.split('/')[0] + '/' + configParam + '/configure';
+        window.history.replaceState({}, '', newUrl);
+      }
+      
+      // Function to get current configuration
+      function getConfiguration() {
+        const enableAdultContent = document.getElementById('enableAdultContent').checked;
+        const enableSearch = document.getElementById('enableSearch').checked;
+        
+        const catalogItems = document.querySelectorAll('.catalog-item');
+        const enabledCatalogs = Array.from(catalogItems)
+          .filter(item => item.querySelector('.catalog-checkbox').checked)
+          .map(item => item.dataset.id);
+        
+        return {
+          enableAdultContent,
+          enableSearch,
+          catalogList: enabledCatalogs
+        };
+      }
+      
+      // Function to apply configuration from URL
+      function applyConfigurationFromUrl() {
+        const pathParts = window.location.pathname.split('/');
+        if (pathParts.length >= 2 && pathParts[1]) {
+          try {
+            const configParam = decodeURIComponent(pathParts[1]);
+            const config = JSON.parse(configParam);
+            
+            // Apply adult content setting
+            if (config.enableAdultContent !== undefined) {
+              document.getElementById('enableAdultContent').checked = config.enableAdultContent;
+            }
+            
+            // Apply search setting
+            if (config.enableSearch !== undefined) {
+              document.getElementById('enableSearch').checked = config.enableSearch;
+            }
+            
+            // Apply catalog settings
+            if (config.catalogList && Array.isArray(config.catalogList)) {
+              const catalogList = document.getElementById('catalogList');
+              const catalogItems = {};
+              const disabledCatalogs = [];
+              
+              // First, mark all catalogs as disabled and collect them
+              document.querySelectorAll('.catalog-item').forEach(item => {
+                const checkbox = item.querySelector('.catalog-checkbox');
+                checkbox.checked = false;
+                item.classList.add('disabled');
+                catalogItems[item.dataset.id] = item;
+                
+                // Remove all items from the list so we can reorder them
+                catalogList.removeChild(item);
+                
+                // Add to disabled catalogs list
+                disabledCatalogs.push(item);
+              });
+              
+              // Add enabled catalogs in the order specified in config.catalogList
+              config.catalogList.forEach(catalogId => {
+                const item = catalogItems[catalogId];
+                if (item) {
+                  // Enable the catalog
+                  const checkbox = item.querySelector('.catalog-checkbox');
+                  checkbox.checked = true;
+                  item.classList.remove('disabled');
+                  
+                  // Add to the list in the specified order
+                  catalogList.appendChild(item);
+                  
+                  // Remove from disabled catalogs
+                  const index = disabledCatalogs.indexOf(item);
+                  if (index !== -1) {
+                    disabledCatalogs.splice(index, 1);
+                  }
+                }
+              });
+              
+              // Add remaining disabled catalogs at the bottom
+              disabledCatalogs.forEach(item => {
+                catalogList.appendChild(item);
+              });
+            }
+          } catch (error) {
+            console.error('Error parsing configuration from URL:', error);
+          }
+        }
+      }
+      
+      // Simplified hover effects with a single function
+      function setButtonHoverState(isHovered) {
+        installButtonContainer.style.transform = isHovered ? 'translateY(-2px)' : 'translateY(0)';
+        installButton.style.boxShadow = isHovered ? 
+          '0 6px 20px rgba(0, 180, 216, 0.4)' : 
+          '0 4px 15px rgba(0, 180, 216, 0.3)';
+        dropdownToggle.style.background = isHovered ? 
+          'rgba(255, 255, 255, 0.3)' : 
+          'rgba(255, 255, 255, 0.2)';
+      }
+      
+      // Add hover effect to both button and dropdown toggle
+      installButtonContainer.addEventListener('mouseenter', () => setButtonHoverState(true));
+      installButtonContainer.addEventListener('mouseleave', () => setButtonHoverState(false));
+      
+      // Ensure dropdown toggle triggers container hover
+      dropdownToggle.addEventListener('mouseenter', (e) => {
+        e.stopPropagation();
+        setButtonHoverState(true);
       });
+      
+      // Consolidated drag and drop functionality
+      function handleDragStart(e) {
+        if (this.classList.contains('disabled')) {
+          e.preventDefault();
+          return false;
+        }
+        
+        draggedItem = this;
+        this.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', ''); // Required for Firefox
+      }
+      
+      function handleDragOver(e) {
+        if (e.preventDefault) e.preventDefault();
+        
+        if (this.classList.contains('disabled') || this === draggedItem) return false;
+        
+        e.dataTransfer.dropEffect = 'move';
+        
+        // Clear all drop targets
+        document.querySelectorAll('.catalog-item').forEach(item => {
+          item.classList.remove('drop-target', 'drop-target-bottom');
+        });
+        
+        // Determine position for drop indicator
+        const rect = this.getBoundingClientRect();
+        const mouseY = e.clientY;
+        const threshold = rect.top + (rect.height / 2);
+        
+        const list = document.getElementById('catalogList');
+        const items = Array.from(list.querySelectorAll('.catalog-item:not(.dragging)'));
+        const isLastItem = items[items.length - 1] === this;
+        
+        if (mouseY < threshold) {
+          this.classList.add('drop-target');
+        } else if (isLastItem) {
+          this.classList.add('drop-target-bottom');
+        } else {
+          const nextItem = this.nextElementSibling;
+          if (nextItem && !nextItem.classList.contains('dragging')) {
+            nextItem.classList.add('drop-target');
+          }
+        }
+        
+        return false;
+      }
+      
+      function handleDrop(e) {
+        if (e.stopPropagation) e.stopPropagation();
+        
+        if (this === draggedItem) return false;
+        
+        const rect = this.getBoundingClientRect();
+        const mouseY = e.clientY;
+        const threshold = rect.top + (rect.height / 2);
+        
+        const list = document.getElementById('catalogList');
+        const items = Array.from(list.querySelectorAll('.catalog-item:not(.dragging)'));
+        const isLastItem = items[items.length - 1] === this;
+        
+        if (mouseY < threshold) {
+          list.insertBefore(draggedItem, this);
+        } else if (isLastItem) {
+          list.appendChild(draggedItem);
+        } else {
+          const nextItem = this.nextElementSibling;
+          if (nextItem) {
+            list.insertBefore(draggedItem, nextItem);
+          } else {
+            list.appendChild(draggedItem);
+          }
+        }
+        
+        // Clear all drop targets
+        document.querySelectorAll('.catalog-item').forEach(item => {
+          item.classList.remove('drop-target', 'drop-target-bottom');
+        });
+        
+        // Update URL with new configuration after drag and drop
+        updateUrlWithConfig();
+        
+        return false;
+      }
+      
+      function handleDragEnd() {
+        this.classList.remove('dragging');
+        document.querySelectorAll('.catalog-item').forEach(item => {
+          item.classList.remove('drop-target', 'drop-target-bottom');
+        });
+        draggedItem = null;
+      }
+      
+      function initDragAndDrop() {
+        const items = document.querySelectorAll('.catalog-item');
+        
+        items.forEach(item => {
+          item.setAttribute('draggable', 'true');
+          item.addEventListener('dragstart', handleDragStart);
+          item.addEventListener('dragover', handleDragOver);
+          item.addEventListener('dragenter', e => e.preventDefault());
+          item.addEventListener('dragleave', function() {
+            this.classList.remove('drop-target', 'drop-target-bottom');
+          });
+          item.addEventListener('drop', handleDrop);
+          item.addEventListener('dragend', handleDragEnd);
+          
+          // Add event listener for catalog toggle
+          const checkbox = item.querySelector('.catalog-checkbox');
+          if (checkbox) {
+            checkbox.addEventListener('change', function() {
+              const catalogItem = this.closest('.catalog-item');
+              catalogItem.classList.toggle('disabled', !this.checked);
+              // Update URL when catalog is toggled
+              updateUrlWithConfig();
+            });
+          }
+        });
+      }
+      
+      // Initialize drag and drop
+      initDragAndDrop();
+      
+      // Add event listeners for configuration changes
+      document.getElementById('enableAdultContent').addEventListener('change', updateUrlWithConfig);
+      document.getElementById('enableSearch').addEventListener('change', updateUrlWithConfig);
+      
+      // Function to generate the install link
+      function generateInstallLink() {
+        const config = getConfiguration();
+        const configParam = encodeURIComponent(JSON.stringify(config));
+        return "stremio://" + window.location.host + "/" + configParam + "/manifest.json";
+      }
+      
+      // Handle install button click
+      document.getElementById("installButton").addEventListener("click", function(e) {
+        e.preventDefault();
+        window.location.href = generateInstallLink();
+      });
+      
+      // Handle dropdown toggle
+      document.getElementById("dropdownToggle").addEventListener("click", function(e) {
+        e.stopPropagation();
+        document.getElementById("installDropdown").classList.toggle("show");
+      });
+      
+      // Handle copy URL button
+      document.getElementById("copyUrlButton").addEventListener("click", function() {
+        const installLink = generateInstallLink();
+        
+        navigator.clipboard.writeText(installLink).catch(() => {
+          // Fallback for browsers that don't support clipboard API
+          const tempInput = document.createElement("input");
+          tempInput.value = installLink;
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          document.execCommand("copy");
+          document.body.removeChild(tempInput);
+        });
+        
+        // Hide dropdown and show success message
+        document.getElementById("installDropdown").classList.remove("show");
+        const successMessage = document.getElementById("copySuccess");
+        successMessage.classList.add("show");
+        setTimeout(() => successMessage.classList.remove("show"), 2000);
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener("click", function(e) {
+        if (!e.target.matches('.install-dropdown-toggle, .install-dropdown, .install-dropdown-item')) {
+          document.getElementById("installDropdown").classList.remove("show");
+        }
+      });
+      
+      // Apply configuration from URL on page load
+      document.addEventListener('DOMContentLoaded', applyConfigurationFromUrl);
     </script>
   </body>
   <footer>

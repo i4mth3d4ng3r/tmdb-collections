@@ -7,7 +7,81 @@ const genreNames = genres.map((genre) => genre.name);
 
 console.log("[manifest.js] Module being loaded, version:", version);
 
-async function getManifest() {
+async function getManifest(config = {}) {
+  // Default catalogs
+  const defaultCatalogs = [
+    {
+      type: "collections",
+      id: `tmdbc${dev}.popular`,
+      name: "Popular" + dev,
+      extra: [
+        {
+          name: "genre",
+          isRequired: false,
+          options: genreNames,
+        },
+      ],
+    },
+    {
+      type: "collections",
+      id: `tmdbc${dev}.topRated`,
+      name: "Top Rated" + dev,
+      extra: [
+        {
+          name: "genre",
+          isRequired: false,
+          options: genreNames,
+        },
+      ],
+    },
+    {
+      type: "collections",
+      id: `tmdbc${dev}.newReleases`,
+      name: "New Releases" + dev,
+      extra: [
+        {
+          name: "genre",
+          isRequired: false,
+          options: genreNames,
+        },
+      ],
+    },
+  ];
+
+  // Search catalog (only added if enableSearch is true)
+  const searchCatalog = {
+    type: "collections",
+    id: `tmdbc${dev}.search`,
+    name: "Search" + dev,
+    extra: [
+      {
+        name: "search",
+        isRequired: true,
+      },
+    ],
+  };
+
+  // Start with empty catalogs array if catalogList is provided, otherwise use default catalogs
+  let catalogs = [];
+
+  if (config.catalogList && Array.isArray(config.catalogList) && config.catalogList.length > 0) {
+    // For each catalog ID in catalogList, find the matching catalog in defaultCatalogs
+    config.catalogList.forEach((catalogId) => {
+      // Find the catalog with matching ID
+      const catalog = defaultCatalogs.find((cat) => cat.id.replace(`tmdbc${dev}.`, "") === catalogId);
+
+      catalogs.push(catalog);
+    });
+  } else if (!config.catalogList) {
+    // If catalogList is not defined, use all default catalogs
+    catalogs = [...defaultCatalogs];
+  }
+
+  // Add search catalog if enabled or not defined at all
+  if (config.enableSearch === true || typeof config.enableSearch === "undefined") {
+    catalogs.push(searchCatalog);
+  }
+
   return {
     id: "org.stremio.tmdbcollections" + dev,
     version: version,
@@ -17,51 +91,13 @@ async function getManifest() {
     types: ["movie", "collections"],
     resources: ["catalog", "meta"],
     idPrefixes: [`tmdbc${dev}.`],
+    behaviorHints: {
+      configurable: true,
+    },
     favicon: "https://github.com/youchi1/tmdb-collections/raw/main/Images/favicon.png",
     logo: "https://github.com/youchi1/tmdb-collections/raw/main/Images/logo.png",
     background: "https://github.com/youchi1/tmdb-collections/raw/main/Images/bg.png",
-    catalogs: [
-      {
-        type: "collections",
-        id: `tmdbc${dev}.popular`,
-        name: "Popular" + dev,
-        extra: [
-          {
-            name: "search",
-            isRequired: false,
-          },
-          {
-            name: "genre",
-            isRequired: false,
-            options: genreNames,
-          },
-        ],
-      },
-      {
-        type: "collections",
-        id: `tmdbc${dev}.topRated`,
-        name: "Top Rated" + dev,
-        extra: [
-          {
-            name: "genre",
-            isRequired: false,
-            options: genreNames,
-          },
-        ],
-      },
-      {
-        type: "collections",
-        id: `tmdbc${dev}.newReleases`,
-        name: "New Releases" + dev,
-        extra: [
-          {
-            name: "genre",
-            isRequired: false,
-            options: genreNames,
-          },
-        ],
-      },
-    ],
+    catalogs: catalogs,
   };
 }
 

@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const addon = express();
 const getManifest = require("./manifest");
-
+const { parseConfig } = require("./lib/utils");
 const { getCachePerformance, getCacheIndex, clearCache } = require("./lib/cache");
 const getCatalogResponse = require("./lib/getCatalogResponse");
 const getMetaResponse = require("./lib/getMetaResponse");
@@ -16,19 +16,25 @@ const respond = function (res, data) {
 };
 
 addon.get("/", async function (_, res) {
+  res.redirect("/configure");
+});
+
+// Configure endpoint
+addon.get("/:config?/configure", async function (req, res) {
   res.sendFile(path.join(__dirname + "/index.html"));
 });
 
-// Manifest endpoint
-addon.get("/manifest.json", async function (req, res) {
-  // console.log("manifest requested");
-  const manifest = await getManifest();
+// Handle config in URL path
+addon.get(["/manifest.json", "/:config/manifest.json"], async function (req, res) {
+  const config = parseConfig(req);
+  const manifest = await getManifest(config);
   respond(res, manifest);
 });
 
 // Type validation middleware
 addon.param("type", async function (req, res, next, val) {
-  const manifest = await getManifest();
+  const config = parseConfig(req);
+  const manifest = await getManifest(config);
   if (manifest.types.includes(val)) {
     //somehow 'series', which is not in the manifest as supported type, is being passed here from time to time
     next();
@@ -37,14 +43,16 @@ addon.param("type", async function (req, res, next, val) {
   }
 });
 
-// Catalog endpoint using the shared function
-addon.get("/catalog/:type/:id/:extra?.json", async function (req, res) {
+// Handle config in URL path for catalog
+addon.get("/:config/catalog/:type/:id/:extra?.json", async function (req, res) {
+  req.config = parseConfig(req);
   const response = await getCatalogResponse(req);
   respond(res, response);
 });
 
-// Meta endpoint using the shared function
-addon.get("/meta/:type/:id.json", async function (req, res) {
+// Handle config in URL path for meta
+addon.get("/:config/meta/:type/:id.json", async function (req, res) {
+  req.config = parseConfig(req);
   const response = await getMetaResponse(req);
   respond(res, response);
 });
