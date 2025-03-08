@@ -25,6 +25,7 @@ addon.get("/:config?/configure", async function (req, res) {
 });
 
 // Handle config in URL path
+//first route for backward compatibility
 addon.get(["/manifest.json", "/:config/manifest.json"], async function (req, res) {
   const config = parseConfig(req);
   const manifest = await getManifest(config);
@@ -44,14 +45,16 @@ addon.param("type", async function (req, res, next, val) {
 });
 
 // Handle config in URL path for catalog
-addon.get("/:config/catalog/:type/:id/:extra?.json", async function (req, res) {
+//first route for backward compatibility
+addon.get(["/catalog/:type/:id/:extra?.json", "/:config/catalog/:type/:id/:extra?.json"], async function (req, res) {
   req.config = parseConfig(req);
   const response = await getCatalogResponse(req);
   respond(res, response);
 });
 
 // Handle config in URL path for meta
-addon.get("/:config/meta/:type/:id.json", async function (req, res) {
+//first route for backward compatibility
+addon.get(["/meta/:type/:id.json", "/:config/meta/:type/:id.json"], async function (req, res) {
   req.config = parseConfig(req);
   const response = await getMetaResponse(req);
   respond(res, response);
