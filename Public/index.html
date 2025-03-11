@@ -954,10 +954,17 @@
       document.getElementById('enableSearch').addEventListener('change', updateUrlWithConfig);
       
       // Function to generate the install link
-      function generateInstallLink() {
+      function generateInstallLink(forCopy = false) {
         const config = getConfiguration();
         const configParam = encodeURIComponent(JSON.stringify(config));
-        return "stremio://" + window.location.host + "/" + configParam + "/manifest.json";
+        
+        if (forCopy) {
+          // For copying, use https URL
+          return "https://" + window.location.host + "/" + configParam + "/manifest.json";
+        } else {
+          // For direct installation, use stremio protocol
+          return "stremio://" + window.location.host + "/" + configParam + "/manifest.json";
+        }
       }
       
       // Handle install button click
@@ -974,7 +981,7 @@
       
       // Handle copy URL button
       document.getElementById("copyUrlButton").addEventListener("click", function() {
-        const installLink = generateInstallLink();
+        const installLink = generateInstallLink(true);
         
         navigator.clipboard.writeText(installLink).catch(() => {
           // Fallback for browsers that don't support clipboard API
