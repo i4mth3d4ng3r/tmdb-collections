@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="https://github.com/youchi1/tmdb-collections/raw/main/Images/favicon.png" type="image/x-icon" />
     <title>TMDB Collections - Stremio Addon</title>
+    <script src="/languages.js"></script>
     <style>
       body {
         margin: 0;
@@ -20,14 +21,16 @@
 
       .container {
         text-align: center;
-        padding: 2rem;
+        padding: 2rem 1rem 1rem 1rem;
         flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 100%;
+        width: calc(100% - 2rem);
         max-width: 800px;
+        margin: 0 auto;
+        box-sizing: border-box;
       }
 
       h1 {
@@ -284,11 +287,14 @@
       
       .catalog-toggle {
         margin-left: 10px;
+        display: flex;
+        align-items: center;
       }
       
       .catalog-toggle .toggle-switch {
         width: 40px;
         height: 24px;
+        margin-left: 8px;
       }
       
       .catalog-toggle .slider:before {
@@ -298,6 +304,12 @@
       
       .catalog-toggle input:checked + .slider:before {
         transform: translateX(16px);
+      }
+      
+      .catalog-toggle span {
+        font-size: 0.8rem;
+        color: #777;
+        white-space: nowrap;
       }
       
       .info-icon {
@@ -361,11 +373,39 @@
       .info-tooltip li {
         margin-bottom: 5px;
       }
+      
+      .language-select {
+        background-color: #333;
+        color: white;
+        border: 1px solid #444;
+        border-radius: 5px;
+        padding: 8px 12px;
+        font-size: 1rem;
+        min-width: 200px;
+        cursor: pointer;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px top 50%;
+        background-size: 12px auto;
+        padding-right: 30px;
+      }
+      
+      .language-select:hover {
+        background-color: #444;
+      }
+      
+      .language-select:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 180, 216, 0.5);
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>TMDB Collections</h1>
+        <h1>TMDB Collections</h1>
       <p>
         Addon lets you explore TMDB Collections, which are essentially grouped movie series. Discover collections featuring newly released movies or browse catalogs of popular and top-rated collections. You can filter by genre or search collections by actor, director, writer, movie or collection name in any language.
       </p>
@@ -389,6 +429,14 @@
         </div>
         
         <div class="config-option">
+          <label for="language">Language</label>
+          <select id="language" class="language-select">
+            <option value="en">English (Default)</option>
+            <!-- Options will be populated from languages data -->
+          </select>
+        </div>
+        
+        <div class="config-option">
           <label>Catalogs
             <span class="info-icon">i
               <span class="info-tooltip">
@@ -396,6 +444,8 @@
                 <ul>
                   <li>Toggle catalogs on/off using the switches</li>
                   <li>Drag and drop to reorder catalogs</li>
+                  <li>Enable "Discover only" to show catalogs only in Discover section</li>
+                  <li>Genres discovery can be slower for non-English languages!</li>
                 </ul>
               </span>
             </span>
@@ -407,8 +457,16 @@
             <div class="catalog-item-handle">☰</div>
             <div class="catalog-item-name">Popular</div>
             <div class="catalog-toggle">
+              <span>Enabled</span>
               <label class="toggle-switch">
                 <input type="checkbox" checked class="catalog-checkbox" id="catalog-popular" title="Enable Popular catalog">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="catalog-toggle">
+              <span>Discover only</span>
+              <label class="toggle-switch" title="Show in Discover only">
+                <input type="checkbox" class="catalog-discover-only" id="catalog-popular-discover" title="Show in Discover only">
                 <span class="slider"></span>
               </label>
             </div>
@@ -417,8 +475,16 @@
             <div class="catalog-item-handle">☰</div>
             <div class="catalog-item-name">Top Rated</div>
             <div class="catalog-toggle">
+              <span>Enabled</span>
               <label class="toggle-switch">
                 <input type="checkbox" checked class="catalog-checkbox" id="catalog-topRated" title="Enable Top Rated catalog">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="catalog-toggle">
+              <span>Discover only</span>
+              <label class="toggle-switch" title="Show in Discover only">
+                <input type="checkbox" class="catalog-discover-only" id="catalog-topRated-discover" title="Show in Discover only">
                 <span class="slider"></span>
               </label>
             </div>
@@ -427,8 +493,16 @@
             <div class="catalog-item-handle">☰</div>
             <div class="catalog-item-name">New Releases</div>
             <div class="catalog-toggle">
+              <span>Enabled</span>
               <label class="toggle-switch">
                 <input type="checkbox" checked class="catalog-checkbox" id="catalog-newReleases" title="Enable New Releases catalog">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="catalog-toggle">
+              <span>Discover only</span>
+              <label class="toggle-switch" title="Show in Discover only">
+                <input type="checkbox" class="catalog-discover-only" id="catalog-newReleases-discover" title="Show in Discover only">
                 <span class="slider"></span>
               </label>
             </div>
@@ -448,11 +522,42 @@
     <script>
       // Drag and drop functionality for catalog list
       let draggedItem = null;
+      let touchStartY = 0;
+      let touchCurrentTarget = null;
       
       // Handle install button hover behavior
       const installButtonContainer = document.querySelector('.install-button-container');
       const installButton = document.querySelector('.install-button');
       const dropdownToggle = document.querySelector('.install-dropdown-toggle');
+      
+      // Populate language select box
+      function populateLanguageSelect() {
+        const languageSelect = document.getElementById('language');
+        
+        // Sort languages by name or english_name
+        const sortedLanguages = [...languages].sort((a, b) => {
+          const aName = a.name || a.english_name;
+          const bName = b.name || b.english_name;
+          return aName.localeCompare(bName);
+        });
+        
+        // Add options to select box
+        sortedLanguages.forEach(lang => {
+          if (lang.iso_639_1 && (lang.name || lang.english_name)) {
+            const displayName = lang.name ? `${lang.name} (${lang.english_name})` : lang.english_name;
+            const option = document.createElement('option');
+            option.value = lang.iso_639_1;
+            option.textContent = displayName;
+            languageSelect.appendChild(option);
+          }
+        });
+        
+        // Add event listener for language change
+        languageSelect.addEventListener('change', updateUrlWithConfig);
+      }
+      
+      // Initialize language select after DOM is loaded
+      document.addEventListener('DOMContentLoaded', populateLanguageSelect);
       
       // Function to update URL with current configuration
       function updateUrlWithConfig() {
@@ -466,16 +571,29 @@
       function getConfiguration() {
         const enableAdultContent = document.getElementById('enableAdultContent').checked;
         const enableSearch = document.getElementById('enableSearch').checked;
+        const language = document.getElementById('language').value;
         
         const catalogItems = document.querySelectorAll('.catalog-item');
         const enabledCatalogs = Array.from(catalogItems)
           .filter(item => item.querySelector('.catalog-checkbox').checked)
           .map(item => item.dataset.id);
         
+        // Get discover only settings for each catalog
+        const discoverOnly = {};
+        catalogItems.forEach(item => {
+          const catalogId = item.dataset.id;
+          const discoverOnlyCheckbox = item.querySelector('.catalog-discover-only');
+          if (discoverOnlyCheckbox) {
+            discoverOnly[catalogId] = discoverOnlyCheckbox.checked;
+          }
+        });
+        
         return {
           enableAdultContent,
           enableSearch,
-          catalogList: enabledCatalogs
+          language,
+          catalogList: enabledCatalogs,
+          discoverOnly
         };
       }
       
@@ -497,6 +615,11 @@
               document.getElementById('enableSearch').checked = config.enableSearch;
             }
             
+            // Apply language setting
+            if (config.language !== undefined) {
+              document.getElementById('language').value = config.language;
+            }
+            
             // Apply catalog settings
             if (config.catalogList && Array.isArray(config.catalogList)) {
               const catalogList = document.getElementById('catalogList');
@@ -509,6 +632,14 @@
                 checkbox.checked = false;
                 item.classList.add('disabled');
                 catalogItems[item.dataset.id] = item;
+                
+                // Set discover only setting if available
+                if (config.discoverOnly && config.discoverOnly[item.dataset.id] !== undefined) {
+                  const discoverOnlyCheckbox = item.querySelector('.catalog-discover-only');
+                  if (discoverOnlyCheckbox) {
+                    discoverOnlyCheckbox.checked = config.discoverOnly[item.dataset.id];
+                  }
+                }
                 
                 // Remove all items from the list so we can reorder them
                 catalogList.removeChild(item);
@@ -580,6 +711,120 @@
         this.classList.add('dragging');
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/plain', ''); // Required for Firefox
+      }
+      
+      // Touch event handlers for mobile drag and drop
+      function handleTouchStart(e) {
+        // Don't initiate drag if clicking on a toggle or checkbox
+        if (this.classList.contains('disabled') || 
+            e.target.closest('.toggle-switch') || 
+            e.target.closest('input[type="checkbox"]')) {
+          return;
+        }
+        
+        // Only handle touch on the drag handle or item name
+        if (!e.target.closest('.catalog-item-handle') && !e.target.closest('.catalog-item-name')) {
+          return;
+        }
+        
+        const touch = e.touches[0];
+        touchStartY = touch.clientY;
+        touchCurrentTarget = this;
+        this.classList.add('dragging');
+        
+        // Prevent scrolling while dragging
+        e.preventDefault();
+      }
+      
+      function handleTouchMove(e) {
+        if (!touchCurrentTarget) return;
+        
+        // Don't continue drag if we're over a toggle or checkbox
+        if (e.target.closest('.toggle-switch') || e.target.closest('input[type="checkbox"]')) {
+          touchCurrentTarget.classList.remove('dragging');
+          touchCurrentTarget = null;
+          return;
+        }
+        
+        const touch = e.touches[0];
+        const currentY = touch.clientY;
+        
+        // Move the element
+        const list = document.getElementById('catalogList');
+        const items = Array.from(list.querySelectorAll('.catalog-item:not(.dragging)'));
+        
+        // Clear all drop targets
+        items.forEach(item => {
+          item.classList.remove('drop-target', 'drop-target-bottom');
+        });
+        
+        // Find the element we're hovering over
+        const hoveredItem = items.find(item => {
+          const rect = item.getBoundingClientRect();
+          return currentY >= rect.top && currentY <= rect.bottom;
+        });
+        
+        if (hoveredItem) {
+          const rect = hoveredItem.getBoundingClientRect();
+          const threshold = rect.top + (rect.height / 2);
+          
+          if (currentY < threshold) {
+            hoveredItem.classList.add('drop-target');
+          } else {
+            hoveredItem.classList.add('drop-target-bottom');
+          }
+        }
+        
+        // Prevent scrolling while dragging
+        e.preventDefault();
+      }
+      
+      function handleTouchEnd(e) {
+        if (!touchCurrentTarget) return;
+        
+        // Don't complete drag if we're over a toggle or checkbox
+        if (e.target.closest('.toggle-switch') || e.target.closest('input[type="checkbox"]')) {
+          touchCurrentTarget.classList.remove('dragging');
+          touchCurrentTarget = null;
+          return;
+        }
+        
+        const touch = e.changedTouches[0];
+        const currentY = touch.clientY;
+        const list = document.getElementById('catalogList');
+        const items = Array.from(list.querySelectorAll('.catalog-item:not(.dragging)'));
+        
+        // Find the element we're hovering over
+        const hoveredItem = items.find(item => {
+          const rect = item.getBoundingClientRect();
+          return currentY >= rect.top && currentY <= rect.bottom;
+        });
+        
+        if (hoveredItem) {
+          const rect = hoveredItem.getBoundingClientRect();
+          const threshold = rect.top + (rect.height / 2);
+          
+          if (currentY < threshold) {
+            list.insertBefore(touchCurrentTarget, hoveredItem);
+          } else {
+            const nextItem = hoveredItem.nextElementSibling;
+            if (nextItem) {
+              list.insertBefore(touchCurrentTarget, nextItem);
+            } else {
+              list.appendChild(touchCurrentTarget);
+            }
+          }
+          
+          // Update URL with new configuration after drag and drop
+          updateUrlWithConfig();
+        }
+        
+        // Clean up
+        touchCurrentTarget.classList.remove('dragging');
+        items.forEach(item => {
+          item.classList.remove('drop-target', 'drop-target-bottom');
+        });
+        touchCurrentTarget = null;
       }
       
       function handleDragOver(e) {
@@ -666,6 +911,7 @@
         const items = document.querySelectorAll('.catalog-item');
         
         items.forEach(item => {
+          // Desktop drag and drop
           item.setAttribute('draggable', 'true');
           item.addEventListener('dragstart', handleDragStart);
           item.addEventListener('dragover', handleDragOver);
@@ -676,6 +922,11 @@
           item.addEventListener('drop', handleDrop);
           item.addEventListener('dragend', handleDragEnd);
           
+          // Mobile touch events
+          item.addEventListener('touchstart', handleTouchStart, { passive: false });
+          item.addEventListener('touchmove', handleTouchMove, { passive: false });
+          item.addEventListener('touchend', handleTouchEnd);
+          
           // Add event listener for catalog toggle
           const checkbox = item.querySelector('.catalog-checkbox');
           if (checkbox) {
@@ -685,6 +936,12 @@
               // Update URL when catalog is toggled
               updateUrlWithConfig();
             });
+          }
+          
+          // Add event listener for discover only toggle
+          const discoverOnlyCheckbox = item.querySelector('.catalog-discover-only');
+          if (discoverOnlyCheckbox) {
+            discoverOnlyCheckbox.addEventListener('change', updateUrlWithConfig);
           }
         });
       }
