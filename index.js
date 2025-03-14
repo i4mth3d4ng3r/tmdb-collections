@@ -19,6 +19,8 @@ const respond = function (res, data) {
   res.send(data);
 };
 
+addon.use(require("express-status-monitor")());
+
 addon.get("/", async function (_, res) {
   res.redirect("/configure");
 });
