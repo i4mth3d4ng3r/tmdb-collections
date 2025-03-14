@@ -4,7 +4,7 @@
   "description": "Addon lets you explore TMDB Collections, which are essentially grouped movie series. Discover collections featuring newly released movies or browse catalogs of popular and top-rated collections. You can filter by genre or search collections by actor, director, writer, movie or collection name in any language.",
   "main": "server.js",
   "scripts": {
-    "start": "node -r ./lib/logger server.js",
+    "start": "node --max-old-space-size=1024 -r ./lib/logger server.js",
     "dev": "nodemon server.js --dev",
     "dev-buffer": "nodemon server.js --dev --buffer"
   },
