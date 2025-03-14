@@ -19,7 +19,28 @@ const respond = function (res, data) {
   res.send(data);
 };
 
-addon.use(require("express-status-monitor")());
+addon.use(
+  require("express-status-monitor")({
+    spans: [
+      {
+        interval: 1, // Every second
+        retention: 60, // Keep 60 datapoints in memory
+      },
+      {
+        interval: 5, // Every 5 seconds
+        retention: 60,
+      },
+      {
+        interval: 15, // Every 15 seconds
+        retention: 60,
+      },
+      {
+        interval: 5 * 60, // Every 5 minutes
+        retention: 120,
+      },
+    ],
+  })
+);
 
 addon.get("/", async function (_, res) {
   res.redirect("/configure");
