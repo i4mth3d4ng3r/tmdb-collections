@@ -3,7 +3,7 @@ const path = require("path");
 const addon = express();
 const { parseConfig } = require("./lib/utils");
 const getManifest = require("./lib/getManifest");
-const { getCachePerformance, getCacheIndex, clearCache } = require("./lib/cache");
+const { getCachePerformance, clearCache } = require("./lib/cache");
 const getCatalogResponse = require("./lib/getCatalogResponse");
 const getMetaResponse = require("./lib/getMetaResponse");
 
@@ -91,11 +91,6 @@ addon.get(["/meta/:type/:id.json", "/:config/meta/:type/:id.json"], async functi
 addon.get("/cache/performance", async (req, res) => {
   const performance = await getCachePerformance();
   respond(res, performance);
-});
-
-addon.get("/cache/index", async (req, res) => {
-  const index = await getCacheIndex();
-  respond(res, index);
 });
 
 addon.get("/cache/clear/:target?", async (req, res) => {
