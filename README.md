@@ -10,12 +10,18 @@ Addon lets you explore TMDB Collections, which are essentially grouped movie ser
   - Top Rated Collections
   - Collections with Newly Released Movies
 
-- **Rich Filtering:**
-
   - Browse by genres
   - Search by collection name
   - Search by movie name
   - Search by person (actor/director/writer)
+
+- **Rich Filtering:**
+  - Customizable addon configuration via web interface
+  - Toggle adult content visibility
+  - Enable/disable search functionality
+  - Select your preferred language
+  - Reorder, enable/disable catalogs
+  - Set catalogs to appear in Discover only
 
 ## Installation
 
