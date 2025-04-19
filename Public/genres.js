@@ -77,54 +77,6 @@ const genres = [
   },
 ];
 
-//get all genres for all languages
-// const fs = require("fs");
-// const express = require("express");
-
-// // Import languages array from languages.js
-// const languages = require("./languages.js");
-
-// // TMDB API configuration
-// const TMDB_API_KEY = process.env.TMDB_API_KEY;
-// const TMDB_API_URL = "https://api.themoviedb.org/3";
-
-// async function getAllGenresForLanguages() {
-//   const allGenres = {};
-
-//   // Process each language
-//   for (const lang of languages) {
-//     try {
-//       const response = await fetch(`${TMDB_API_URL}/genre/movie/list?api_key=257654f35e3dff105574f97fb4b97035&language=${lang.iso_639_1}`);
-
-//       if (!response.ok) {
-//         console.warn(`Failed to fetch genres for language ${lang.iso_639_1}: ${response.status}`);
-//         continue;
-//       }
-
-//       const data = await response.json();
-//       allGenres[lang.iso_639_1] = data.genres;
-
-//       // Add a small delay to avoid hitting rate limits
-//       await new Promise((resolve) => setTimeout(resolve, 250));
-
-//       console.log(`Successfully fetched genres for ${lang.english_name} (${lang.iso_639_1})`);
-//     } catch (error) {
-//       console.error(`Error fetching genres for ${lang.iso_639_1}:`, error.message);
-//     }
-//   }
-
-//   // Write results to file
-//   try {
-//     await fs.promises.writeFile("./Public/newGenres.js", `const genres = ${JSON.stringify(allGenres, null, 2)};\n\nmodule.exports = genres;`);
-//     console.log("Successfully wrote genres to newGenres.js");
-//   } catch (error) {
-//     console.error("Error writing to file:", error);
-//   }
-// }
-
-// getAllGenresForLanguages();
-
 module.exports = {
   genres,
-  // getAllGenresForLanguages
 };
