@@ -6,11 +6,12 @@
   "scripts": {
     "start": "node -r ./lib/logger server.js",
     "dev": "nodemon server.js --dev",
-    "dev-buffer": "nodemon server.js --dev --buffer"
+    "dev-buffer": "nodemon server.js --dev --buffer",
+    "format": "prettier --write \"**/*.{js,json,md}\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JMskch/TMDB-Collections.git"
+    "url": "git+https://github.com/youchi1/tmdb-collections.git"
   },
   "keywords": [
     "stremio",
@@ -22,9 +23,9 @@
   "author": "Youchi",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JMskch/TMDB-Collections/issues"
+    "url": "https://github.com/youchi1/tmdb-collections/issues"
   },
-  "homepage": "https://github.com/JMskch/TMDB-Collections#readme",
+  "homepage": "https://github.com/youchi1/tmdb-collections#readme",
   "dependencies": {
     "@keyv/sqlite": "^4.0.1",
     "@resolid/keyv-sqlite": "^5.0.1",
@@ -38,5 +39,8 @@
     "moviedb-promise": "^4.0.7",
     "newrelic": "^12.14.0",
     "node-cron": "^3.0.3"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
   }
 }
