@@ -186,6 +186,7 @@
         display: inline-block;
         width: 60px;
         height: 34px;
+        flex-shrink: 0;
       }
       
       .toggle-switch input {
@@ -429,6 +430,14 @@
         </div>
         
         <div class="config-option">
+          <label for="enableCollectionFromMovie">Enable option to open collection from movie details page</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="enableCollectionFromMovie" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        
+        <div class="config-option">
           <label for="language">Language</label>
           <select id="language" class="language-select">
             <option value="en">English (Default)</option>
@@ -570,6 +579,7 @@
       function getConfiguration() {
         const enableAdultContent = document.getElementById('enableAdultContent').checked;
         const enableSearch = document.getElementById('enableSearch').checked;
+        const enableCollectionFromMovie = document.getElementById('enableCollectionFromMovie').checked;
         const language = document.getElementById('language').value;
         
         const catalogItems = document.querySelectorAll('.catalog-item');
@@ -590,6 +600,7 @@
         return {
           enableAdultContent,
           enableSearch,
+          enableCollectionFromMovie,
           language,
           catalogList: enabledCatalogs,
           discoverOnly
@@ -612,6 +623,11 @@
             // Apply search setting
             if (config.enableSearch !== undefined) {
               document.getElementById('enableSearch').checked = config.enableSearch;
+            }
+            
+            // Apply collection from movie setting
+            if (config.enableCollectionFromMovie !== undefined) {
+              document.getElementById('enableCollectionFromMovie').checked = config.enableCollectionFromMovie;
             }
             
             // Apply language setting
@@ -951,6 +967,7 @@
       // Add event listeners for configuration changes
       document.getElementById('enableAdultContent').addEventListener('change', updateUrlWithConfig);
       document.getElementById('enableSearch').addEventListener('change', updateUrlWithConfig);
+      document.getElementById('enableCollectionFromMovie').addEventListener('change', updateUrlWithConfig);
       
       // Function to generate the install link
       function generateInstallLink(forCopy = false) {

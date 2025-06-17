@@ -5,7 +5,7 @@ const { parseConfig } = require("./lib/utils");
 const getManifest = require("./lib/getManifest");
 const getCatalogResponse = require("./lib/getCatalogResponse");
 const getMetaResponse = require("./lib/getMetaResponse");
-
+const getStreamResponse = require("./lib/getStreamResponse");
 // Response helper
 const respond = function (res, data) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -56,6 +56,12 @@ addon.get(["/catalog/:type/:id/:extra?.json", "/:config/catalog/:type/:id/:extra
 addon.get(["/meta/:type/:id.json", "/:config/meta/:type/:id.json"], async function (req, res) {
   req.config = parseConfig(req.params.config);
   const response = await getMetaResponse(req);
+  respond(res, response);
+});
+
+addon.get("/:config/stream/:type/:id.json", async function (req, res) {
+  req.config = parseConfig(req.params.config);
+  const response = await getStreamResponse(req);
   respond(res, response);
 });
 
