@@ -61,6 +61,7 @@ addon.get(["/meta/:type/:id.json", "/:config/meta/:type/:id.json"], async functi
 
 addon.get("/:config/stream/:type/:id.json", async function (req, res) {
   req.config = parseConfig(req.params.config);
+  // console.log("headers", req.headers);
   const response = await getStreamResponse(req);
   respond(res, response);
 });
