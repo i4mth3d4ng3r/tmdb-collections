@@ -26,7 +26,7 @@ COPY --from=builder /app /app
 EXPOSE 7000
 
 # Define environment variable for Fanart key (to be set externally)
-# ENV FANART_API_KEY=your_key_here
-
+#ENV FANART_API_KEY=your_key_here
+ENV NEW_RELIC_LICENSE_KEY=
 # Start the app
 CMD ["npm", "start"]
