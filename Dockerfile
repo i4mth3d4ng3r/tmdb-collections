@@ -1,32 +1,19 @@
-# 1. Use an official lightweight Node.js runtime
-FROM node:18-alpine AS builder
-
-# 2. Set working directory
+FROM node:22.17-alpine
 WORKDIR /app
 
-# 3. Copy project files and install dependencies
-COPY package.json package-lock.json ./
-RUN npm ci --only=production
+# Copy package files first for better Docker layer caching
+COPY package*.json ./
 
-# 4. Copy remaining source files
-COPY . .
+# Install production dependencies only
+RUN npm ci --omit=dev --ignore-scripts && \
+npm cache clean --force
 
-# 5. Build step—if needed—or just prepare for runtime
-# (Uncomment if there's a build script)
-# RUN npm run build
+# Copy application files
+COPY Images ./Images
+COPY Public ./Public
+COPY lib ./lib
+COPY index.js server.js newrelic.js ./
 
-# 6. Final image
-FROM node:18-alpine AS runtime
-WORKDIR /app
+ENV NODE_ENV=production
 
-# Copy node modules and app files from builder stage
-COPY --from=builder /app /app
-
-# Expose default Stremio addon port (adjust if different)
-EXPOSE 7000
-
-# Define environment variable for Fanart key (to be set externally)
-#ENV FANART_API_KEY=your_key_here
-ENV NEW_RELIC_LICENSE_KEY=
-# Start the app
-CMD ["npm", "start"]
+ENTRYPOINT ["npm", "start"]
